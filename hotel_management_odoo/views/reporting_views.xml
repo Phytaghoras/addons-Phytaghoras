@@ -12,9 +12,9 @@
               parent="hotel_reporting_menu"
               sequence="20"/>
     <!--    Sale Order Report Menu-->
-    <menuitem id="sale_order_detail_menu"
+    <!-- <menuitem id="sale_order_detail_menu"
               name="Sale Order"
               action="sale_order_detail_action"
               parent="hotel_reporting_menu"
-              sequence="20"/>
+              sequence="20"/> -->
 </odoo>

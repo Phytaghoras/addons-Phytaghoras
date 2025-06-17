@@ -10,10 +10,10 @@
     </t>
     <t t-name="HotelOrder">
         <div class="row main-section">
-            <!--            Total Room-->
+            <!--Total Room-->
             <div class="col-md-3 col-sm-6 total_room dash-card">
                 <div class="card" style="width: 18rem;">
-                    <div class="card-img-top dash-icon-1 "
+                    <div class=" card-img-top dash-icon-1 "
                          style="color:#e39db5;">
                         <i class="fa fa-bed fa-lg"/>
                     </div>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-            <!--            Check In-->
+            <!--Check In-->
             <div groups="hotel_management_odoo.hotel_group_reception"
                  class="col-md-3 col-sm-6 check_in dash-card">
                 <div class="card" style="width: 18rem;">
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <!--            Available Room-->
+            <!--Available Room-->
             <div groups="hotel_management_odoo.hotel_group_reception"
                  class="col-md-3 col-sm-6 available_room dash-card">
                 <div class="card" style="width: 18rem;">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <!--            Total Reservations-->
+            <!--Total Reservations-->
             <div groups="hotel_management_odoo.hotel_group_reception"
                  class="col-md-3 col-sm-6 reservations dash-card">
                 <div class="card" style="width: 18rem;">
@@ -73,7 +73,7 @@
                     </div>
                 </div>
             </div>
-            <!--            Today's Check Out-->
+            <!--Today's Check Out-->
             <div groups="hotel_management_odoo.hotel_group_reception"
                  class="col-md-3 col-sm-6 today_check_out dash-card">
                 <div class="card" style="width: 18rem;">
@@ -89,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            <!--            Total Staff-->
+            <!--Total Staff-->
             <div groups="hotel_management_odoo.hotel_group_reception"
                  class="col-md-3 col-sm-6 total_staff dash-card">
                 <div class="card" style="width: 18rem;">
@@ -105,7 +105,7 @@
                     </div>
                 </div>
             </div>
-            <!--            Total Vehicle-->
+            <!--Total Vehicle-->
             <div groups="hotel_management_odoo.hotel_group_reception"
                  class="col-md-3 col-sm-6 total_vehicle dash-card">
                 <div class="card" style="width: 18rem;">
@@ -121,7 +121,7 @@
                     </div>
                 </div>
             </div>
-            <!--            Available Vehicle-->
+            <!--Available Vehicle-->
             <div groups="hotel_management_odoo.hotel_group_reception"
                  class="col-md-3 col-sm-6 available_vehicle dash-card">
                 <div class="card" style="width: 18rem;">
@@ -137,7 +137,7 @@
                     </div>
                 </div>
             </div>
-            <!--            Total Events-->
+            <!--Total Events-->
             <div groups="hotel_management_odoo.hotel_group_reception"
                  class="col-md-3 col-sm-6 total_events dash-card">
                 <div class="card" style="width: 18rem;">
@@ -153,7 +153,7 @@
                     </div>
                 </div>
             </div>
-            <!--            Today's Events-->
+            <!--Today's Events-->
             <div groups="hotel_management_odoo.hotel_group_reception"
                  class="col-md-3 col-sm-6 today_events dash-card">
                 <div class="card" style="width: 18rem;">
@@ -169,7 +169,7 @@
                     </div>
                 </div>
             </div>
-            <!--            Pending Events-->
+            <!--Pending Events-->
             <div groups="hotel_management_odoo.hotel_group_reception"
                  class="col-md-3 col-sm-6 pending_event dash-card">
                 <div class="card" style="width: 18rem;">
@@ -219,7 +219,7 @@
             </div>
             <!--            Total Revenue-->
             <div groups="hotel_management_odoo.hotel_group_reception"
-                 class="col-md-3 col-sm-6 total_revenue dash-card">
+                 class="col-md-3 col-sm-6 total_revenue dash-card d-none">
                 <div class="card" style="width: 18rem;">
                     <div class="card-img-top dash-icon-1" style="color:#666660">
                         <i class="fa fa-usd fa-lg"/>
@@ -235,7 +235,7 @@
             </div>
             <!--            Today Revenue-->
             <div groups="hotel_management_odoo.hotel_group_reception"
-                 class="col-md-3 col-sm-6 today_revenue dash-card">
+                 class="col-md-3 col-sm-6 today_revenue dash-card d-none">
                 <div class="card" style="width: 18rem;">
                     <div class="card-img-top dash-icon-1"
                          style="color:#397303;">
@@ -250,9 +250,9 @@
                     </div>
                 </div>
             </div>
-            <!--            Pending Payment-->
+            <!--Pending Payment-->
             <div groups="hotel_management_odoo.hotel_group_reception"
-                 class="col-md-3 col-sm-6 pending_payment dash-card">
+                 class="col-md-3 col-sm-6 pending_payment dash-card d-none">
                 <div class="card" style="width: 18rem;">
                     <div class="card-img-top dash-icon-1"
                          style="color:#f0b686;">

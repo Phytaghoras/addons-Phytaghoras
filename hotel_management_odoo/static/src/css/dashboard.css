@@ -10,12 +10,19 @@
     text-align:center;
     border:none;
     margin:20px;
+    border-radius: 100px;
 }
 .dash-card .card:hover {
 
     transform: translateY(-2px) translateZ(0) !important;
     box-shadow: 0 10px 10px 0 rgba(62, 57, 107, 0.12), 0 0 0 transparent !important;
+    border-radius: 100px;
+    
 
+}
+
+div.card-body{
+    border-radius: 100px;
 }
 .dash-card .dash-count{
     font-size:35px;
