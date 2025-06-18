@@ -5,7 +5,7 @@
         <field name="name">room.booking.view.form</field>
         <field name="model">room.booking</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="false">
                 <header>
                     <button name="action_reserve" string="Reserve"
                             states="draft" type="object" class="btn-primary"/>
@@ -103,7 +103,6 @@
                                     <field name="room_id"
                                            string="Room"
                                            required="1"
-                                           domain="[('is_room_avail','=',True)]"
                                            options="{'no_open': True, 'no_create': True}"
                                     />
                                     <field name="checkin_date"/>

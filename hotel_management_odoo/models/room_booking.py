@@ -427,12 +427,53 @@ class RoomBooking(models.Model):
                 for event in self.event_line_ids:
                     event.unlink()
 
-    @api.onchange('food_order_line_ids', 'room_line_ids',
-                  'service_line_ids', 'vehicle_line_ids', 'event_line_ids')
+    @api.onchange('room_line_ids')
     def _onchange_room_line_ids(self):
-        """Invokes the Compute amounts function"""
-        self._compute_amount_untaxed()
-        self.invoice_button_visible = False
+        """Update room availability status in real-time"""
+        for line in self.room_line_ids:
+            if line.room_id:
+                # Cek ketersediaan kamar
+                overlapping = self.env['room.booking.line'].search([
+                    ('id', '!=', line.id or 0),  # Exclude current line
+                    ('room_id', '=', line.room_id.id),
+                    ('checkin_date', '<', line.checkout_date or '9999-12-31'),
+                    ('checkout_date', '>', line.checkin_date or '0001-01-01'),
+                    ('booking_id.state', 'not in', ['cancel', 'done'])
+                ], limit=1)
+                
+                if overlapping:
+                    warning = {
+                        'title': _('Peringatan!'),
+                        'message': _(
+                            'Kamar %s sudah dipesan dari %s sampai %s.\n' 
+                            'Silakan pilih tanggal yang berbeda.'
+                        ) % (line.room_id.name, 
+                            overlapping.checkin_date, 
+                            overlapping.checkout_date)
+                    }
+                    return {'warning': warning}
+
+    @api.constrains('room_line_ids', 'state')
+    def _check_room_availability(self):
+        for booking in self:
+            for line in booking.room_line_ids:
+                # Cek apakah kamar sudah dipesan di tanggal yang sama
+                overlapping_bookings = self.env['room.booking.line'].search([
+                    ('id', '!=', line.id),  # Exclude current line
+                    ('room_id', '=', line.room_id.id),
+                    ('checkin_date', '<', line.checkout_date),
+                    ('checkout_date', '>', line.checkin_date),
+                    ('booking_id.state', 'not in', ['cancel', 'done'])
+                ], limit=1)
+                
+                if overlapping_bookings:
+                    raise ValidationError(
+                        _("Kamar %s sudah dipesan dari %s sampai %s. "
+                          "Silakan pilih tanggal yang berbeda.")
+                        % (line.room_id.name, 
+                           overlapping_bookings.checkin_date, 
+                           overlapping_bookings.checkout_date)
+                    )
 
     @api.constrains("room_line_ids")
     def _check_duplicate_folio_room_line(self):

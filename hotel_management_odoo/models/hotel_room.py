@@ -51,7 +51,7 @@ class HotelRoom(models.Model):
         default=_get_default_uom_id, required=True,
         help="Default unit of measure used for all stock operations.")
     room_image = fields.Image(string="Room Image", max_width=1920,
-                              max_height=1920, help='Image of the room')
+                              max_height=1080, help='Image of the room')
     taxes_ids = fields.Many2many('account.tax',
                                  'hotel_room_taxes_rel',
                                  'room_id', 'tax_id',
@@ -115,3 +115,43 @@ class HotelRoom(models.Model):
             self.num_person = 4
         elif self.room_type == "family":
             self.num_person = 6
+
+    def is_available(self, check_in, check_out):
+        """Check if the room is available for the given date range
+        
+        Args:
+            check_in (datetime): Check-in date
+            check_out (datetime): Check-out date
+            
+        Returns:
+            bool: True if room is available, False otherwise
+        """
+        self.ensure_one()
+        # Cek apakah ada booking yang overlap dengan tanggal yang diminta
+        overlapping_bookings = self.env['room.booking.line'].search([
+            ('room_id', '=', self.id),
+            ('checkin_date', '<', check_out),
+            ('checkout_date', '>', check_in),
+            ('state', 'not in', ['cancel', 'done'])
+        ], limit=1)
+        return not bool(overlapping_bookings)
+
+    @api.model
+    def get_available_rooms(self, check_in, check_out):
+        """Get all available rooms for the given date range
+        
+        Args:
+            check_in (datetime): Check-in date
+            check_out (datetime): Check-out date
+            
+        Returns:
+            recordset: Available rooms
+        """
+        all_rooms = self.search([])
+        available_rooms = self.env['hotel.room']
+        
+        for room in all_rooms:
+            if room.is_available(check_in, check_out):
+                available_rooms |= room
+                
+        return available_rooms

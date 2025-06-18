@@ -1,101 +1,101 @@
 odoo.define('hotel_management_odoo.dashboard_action', function (require){
-"use strict";
-var AbstractAction = require('web.AbstractAction');
-var core = require('web.core');
-var QWeb = core.qweb;
-var rpc = require('web.rpc');
-var ajax = require('web.ajax');
-document.write(
-  unescape("%3Cscript src='https://cdn.jsdelivr.net/npm/chart.js' type='text/javascript'%3E%3C/script%3E"));
-var _t = core._t;
-const { loadBundle } = require("@web/core/assets");
-var CustomDashBoard = AbstractAction.extend({
-   template: 'CustomDashBoard',
-   //Click Events
-     events: {
-            'click .total_room':'total_rooms',
-            'click .check_in':'check_ins',
-            'click .available_room':'available_rooms',
-            'click .reservations':'reservations',
-            'click .today_check_out':'check_outs',
-            'click .total_vehicle':'fetch_total_vehicle',
-            'click .available_vehicle':'fetch_available_vehicle',
-            'click .total_events':'view_total_events',
-            'click .today_events':'fetch_today_events',
-            'click .pending_event':'fetch_pending_events',
-            'click .food_item':'fetch_food_item',
-            'click .food_order':'fetch_food_order',
-            'click .total_staff':'fetch_total_staff',
-    },
-     init: function(parent, context) {
-       this._super(parent, context);
-       this.dashboards_templates = ['HotelOrder'];
-       this.total = [];
-       this.today_reservation = [];
-       this.total_sale = [];
-       this.total_food_items = [];
-       this.total_events = [];
-     },
-     reload: function () {
-        window.location.href = this.href;
-     },
-     willStart: function() {
-       var self = this;
-       return Promise.all([loadBundle(this), this._super()]).then(function() {
-           return self.fetch_data();
-       });
-     },
-       start: function() {
+    "use strict";
+    var AbstractAction = require('web.AbstractAction');
+    var core = require('web.core');
+    var QWeb = core.qweb;
+    var rpc = require('web.rpc');
+    var ajax = require('web.ajax');
+    document.write(
+      unescape("%3Cscript src='https://cdn.jsdelivr.net/npm/chart.js' type='text/javascript'%3E%3C/script%3E"));
+    var _t = core._t;
+    const { loadBundle } = require("@web/core/assets");
+    var CustomDashBoard = AbstractAction.extend({
+       template: 'CustomDashBoard',
+       //Click Events
+         events: {
+                'click .total_room':'total_rooms',
+                'click .check_in':'check_ins',
+                'click .available_room':'available_rooms',
+                'click .reservations':'reservations',
+                'click .today_check_out':'check_outs',
+                'click .total_vehicle':'fetch_total_vehicle',
+                'click .available_vehicle':'fetch_available_vehicle',
+                'click .total_events':'view_total_events',
+                'click .today_events':'fetch_today_events',
+                'click .pending_event':'fetch_pending_events',
+                'click .food_item':'fetch_food_item',
+                'click .food_order':'fetch_food_order',
+                'click .total_staff':'fetch_total_staff',
+        },
+         init: function(parent, context) {
+           this._super(parent, context);
+           this.dashboards_templates = ['HotelOrder'];
+           this.total = [];
+           this.today_reservation = [];
+           this.total_sale = [];
+           this.total_food_items = [];
+           this.total_events = [];
+         },
+         reload: function () {
+            window.location.href = this.href;
+         },
+         willStart: function() {
            var self = this;
-           this.set("title", 'Dashboard');
-           return this._super().then(function() {
-               self.render_dashboards();//Call to Render Dashboard function
+           return Promise.all([loadBundle(this), this._super()]).then(function() {
+               return self.fetch_data();
            });
-       },
-     fetch_data: function() {
-       var self = this;
-       //RPC call for retrieving data for displaying on dashboard tiles
-       var def1= self._rpc({
-           model:'room.booking',
-           method:'get_details',
-           args: [''],
-       }).then(function(result){
-            document.getElementsByClassName("total_room").innerHTML=['total_room']
-            self.total_room=result['total_room']
-            self.available_room=result['available_room']
-            self.staff=result['staff']
-            self.check_in=result['check_in']
-            self.reservation=result['reservation']
-            self.check_out=result['check_out']
-            self.total_vehicle=result['total_vehicle']
-            self.available_vehicle=result['available_vehicle']
-            self.total_event=result['total_event']
-            self.today_events=result['today_events']
-            self.pending_events=result['pending_events']
-            self.food_items=result['food_items']
-            self.food_order=result['food_order']
-            if(result['currency_position']=='before'){
-                self.total_revenue=result['currency_symbol']+" "+result['total_revenue']
-                self.today_revenue=result['currency_symbol']+" "+result['today_revenue']
-                self.pending_payment=result['currency_symbol']+" "+result['pending_payment']
-            }
-            else{
-                self.total_revenue=+result['total_revenue']+" "+result['currency_symbol']
-                self.today_revenue=result['today_revenue']+" "+result['currency_symbol']
-                self.pending_payment=result['pending_payment']+" "+result['currency_symbol']
-            }
+         },
+           start: function() {
+               var self = this;
+               this.set("title", 'Dashboard');
+               return this._super().then(function() {
+                   self.render_dashboards();//Call to Render Dashboard function
+               });
+           },
+         fetch_data: function() {
+           var self = this;
+           //RPC call for retrieving data for displaying on dashboard tiles
+           var def1= self._rpc({
+               model:'room.booking',
+               method:'get_details',
+               args: [''],
+           }).then(function(result){
+                document.getElementsByClassName("total_room").innerHTML=['total_room']
+                self.total_room=result['total_room']
+                self.available_room=result['available_room']
+                self.staff=result['staff']
+                self.check_in=result['check_in']
+                self.reservation=result['reservation']
+                self.check_out=result['check_out']
+                self.total_vehicle=result['total_vehicle']
+                self.available_vehicle=result['available_vehicle']
+                self.total_event=result['total_event']
+                self.today_events=result['today_events']
+                self.pending_events=result['pending_events']
+                self.food_items=result['food_items']
+                self.food_order=result['food_order']
+                if(result['currency_position']=='before'){
+                    self.total_revenue=result['currency_symbol']+" "+result['total_revenue']
+                    self.today_revenue=result['currency_symbol']+" "+result['today_revenue']
+                    self.pending_payment=result['currency_symbol']+" "+result['pending_payment']
+                }
+                else{
+                    self.total_revenue=+result['total_revenue']+" "+result['currency_symbol']
+                    self.today_revenue=result['today_revenue']+" "+result['currency_symbol']
+                    self.pending_payment=result['pending_payment']+" "+result['currency_symbol']
+                }
 
-       });
-           return $.when(def1);
-
-     },
-       render_dashboards: function(){
-       var self = this;
-       //Render Template
-       _.each(this.dashboards_templates, function(template) {
-               self.$('.o_pj_dashboard').append(QWeb.render(template,
-                {widget: self}));
            });
+               return $.when(def1);
+
+         },
+           render_dashboards: function(){
+           var self = this;
+           //Render Template
+           _.each(this.dashboards_templates, function(template) {
+                   self.$('.o_pj_dashboard').append(QWeb.render(template,
+                    {widget: self}));
+               });
    },
     total_rooms: function(e){
         var self = this;
@@ -221,16 +221,34 @@ var CustomDashBoard = AbstractAction.extend({
         var self = this;
         e.stopPropagation();
         e.preventDefault();
-        this.do_action({
-            name: _t("Available Room"),
-            type:'ir.actions.act_window',
-            res_model:'hotel.room',
-            view_mode:'tree,form',
-            view_type:'form',
-            views:[[false,'list'],[false,'form']],
-            domain: [['status', '=', 'available']],
-            target:'current'
-        },{ on_reverse_breadcrum: function(){return self.reload();}})
+        
+        // Dapatkan tanggal hari ini
+        var today = new Date();
+        var tomorrow = new Date();
+        tomorrow.setDate(today.getDate() + 1);
+        
+        // Format tanggal untuk dikirim ke server
+        var formatDate = function(date) {
+            return date.toISOString().split('T')[0];
+        };
+        
+        // Panggil method server untuk mendapatkan kamar yang tersedia
+        this._rpc({
+            model: 'hotel.room',
+            method: 'get_available_rooms',
+            args: [formatDate(today), formatDate(tomorrow)],
+        }).then(function(roomIds) {
+            self.do_action({
+                name: _t("Available Room"),
+                type: 'ir.actions.act_window',
+                res_model: 'hotel.room',
+                view_mode: 'tree,form',
+                view_type: 'form',
+                views: [[false, 'list'], [false, 'form']],
+                domain: [['id', 'in', roomIds]],
+                target: 'current'
+            }, {on_reverse_breadcrum: function() { return self.reload(); }});
+        });
     },
 //    Reservations
     reservations: function(e){
