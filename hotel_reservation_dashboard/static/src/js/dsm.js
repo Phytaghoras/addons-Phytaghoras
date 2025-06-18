@@ -408,9 +408,17 @@ odoo.define('hotel_reservation_dashboard.dsm', function (require) {
                             var checkout = new Date(checkoutDate);
                             var diffTime = checkout - checkin;
                             var diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-                            if (diffTime > 0) {
-                                diffDays += 1;
-                            }
+                        if (diffTime <= 0) {
+                            alert("Checkout date must be at least 1 day after checkin date");
+                            return;
+                        }
+
+                        // ✅ FIX: Ensure minimum 1 day booking
+                        if (diffDays <= 0) {
+                            diffDays = 1; // Minimum 1 day booking
+                        } else if (diffTime > 0) {
+                            diffDays += 1;
+                        }
                          return [
                             0, 0, {
                                 'room_id': room,
