@@ -23,11 +23,11 @@
     </record>
 
     <record id="booking_edit_dashboard_access" model="res.groups">
-        <field name="name">Booking Dasboard Edit Access</field>
+        <field name="name">Booking Dashboard Edit Access</field>
         <field name="category_id" ref="hotel_management_odoo.module_category_hotel_management"/>
     </record>
     <record id="booking_dashboard_access" model="res.groups">
-        <field name="name">Booking Dasboard</field>
+        <field name="name">Booking Dashboard</field>
         <field name="category_id" ref="hotel_management_odoo.module_category_hotel_management"/>
     </record>
 
