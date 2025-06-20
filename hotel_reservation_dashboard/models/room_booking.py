@@ -1,6 +1,9 @@
-from odoo import api,fields, models, _
+from odoo import api, fields, models, _
 from datetime import datetime, timedelta
 from odoo.exceptions import ValidationError
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 class HotelRoomInherit(models.Model):
@@ -93,7 +96,7 @@ class RoomBookingInherit(models.Model):
                     """
         self.env.cr.execute(query)
         results = self.env.cr.dictfetchall()
-        print("results", results)
+        _logger.debug("Results: %s", results)
         return results
 
     @api.model
@@ -161,7 +164,7 @@ class RoomBookingInherit(models.Model):
             """
         self.env.cr.execute(query)
         results = self.env.cr.dictfetchall()
-        print("results", results)
+        _logger.debug("Results: %s", results)
         return results
 
     @api.model
