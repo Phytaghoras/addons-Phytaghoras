@@ -27,5 +27,4 @@
     'auto_install': False,
     'license': 'AGPL-3',
     'images': ['static/description/assets/screenshots/banner.png'],
-    'application': True,
 }
